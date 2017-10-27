@@ -20,3 +20,16 @@
 # Ultraedit backup files #
 ##########################
 *.bak
+WindowsNoEditor/BattleTanks/Content/Paks/BattleTanks-WindowsNoEditor.pak
+WindowsNoEditor/BattleTanks/Saved/Config/CrashReportClient/UE4CC-Windows-66713EBA4671EDB8E338ABAF09189F65/CrashReportClient.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Compat.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/DeviceProfiles.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/EditorPerProjectUserSettings.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Engine.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Game.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Hardware.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Input.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Lightmass.ini
+WindowsNoEditor/BattleTanks/Saved/Config/WindowsNoEditor/Scalability.ini
+WindowsNoEditor/Engine/Saved/Config/WindowsNoEditor/Manifest.ini
+WindowsNoEditor/Manifest_NonUFSFiles_Win64.txt
