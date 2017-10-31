@@ -6,32 +6,43 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("AI Controler: Begin play"));
-
-	GetControlledTank();
-}
-
-ATank* ATankAIController::GetControlledTank() const {
-	ATank* MyTank = Cast<ATank>(GetPawn());
-
-	if (MyTank)
+	ATank* TargetTank = GetPlayerTank();
+	if (TargetTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Possessed Tank: %s"), *MyTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Target found: %s"), *TargetTank->GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Unable to get possessed Tank"));
+		UE_LOG(LogTemp, Error, TEXT("Unable to locate target tank!!! What do I do now. I am a tank with no purpose"));
 	}
 
-	return MyTank;
-
+	//UE_LOG(LogTemp, Warning, TEXT("AI Controler: Begin play"));
+	//ATank* MyTank = GetControlledTank();
+	//if (MyTank)
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("Possessed Tank: %s"), *MyTank->GetName());
+	//}
+	//else
+	//{
+	//	UE_LOG(LogTemp, Error, TEXT("Unable to get possessed Tank"));
+	//}
 }
 
-ATank * ATankAIController::GetPlayerTank() const
+void ATankAIController::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 
-	GetWorld()->GetPlayerController()
-	return nullptr;
+	if (!GetPlayerTank() || !GetControlledTank()) { return; }
+
+	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+}
+
+ATank* ATankAIController::GetControlledTank() const {
+	return Cast<ATank>(GetPawn());
+}
+
+ATank* ATankAIController::GetPlayerTank() const
+{
+	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
