@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void FireProjectile();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,6 +41,6 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float ProjectileVelocity = 8000.0f;
+	float ProjectileVelocity = 4000.0f;
 
 };

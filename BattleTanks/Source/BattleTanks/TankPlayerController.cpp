@@ -7,21 +7,14 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("Player Controler: Begin play"));
 	GetControlledTank();
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	// UE_LOG(LogTemp, Warning, TEXT("Player Tank: Tick"));
-
 	// Move the Turret to the crosshair
 	AimTowardCrosshair();
-
-	// Colour the crosshiar if we are aimed at the target
-
 }
 
 ATank* ATankPlayerController::GetControlledTank() const {

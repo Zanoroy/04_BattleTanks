@@ -3,17 +3,11 @@
 #include "TankTurret.h"
 #include "Engine/World.h"
 
-void UTankTurret::RotateToTarget(float RelativeSpeed)
+void UTankTurret::Rotate(float RelativeSpeed)
 {
-	// UE_LOG(LogTemp, Warning, TEXT("Elevate called with speed: %f"), RelativeSpeed);
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
-
 	auto RotationChange = RelativeSpeed * MaxDegressPerSecond * GetWorld()->GetDeltaSeconds();
-	auto RawNewRotation = RelativeRotation.Yaw + RotationChange;
-
-	// auto time = GetWorld()->GetTimeSeconds();
-	// UE_LOG(LogTemp, Warning, TEXT("%f: %f - elevation"), time, Elevation);
-
-	SetRelativeRotation(FRotator(0, RawNewRotation, 0));
+	auto NewRotation = RelativeRotation.Yaw + RotationChange;
+	SetRelativeRotation(FRotator(0, NewRotation, 0));
 }
 

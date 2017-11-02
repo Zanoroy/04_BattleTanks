@@ -16,17 +16,6 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate target tank!!! What do I do now. I am a tank with no purpose"));
 	}
-
-	//UE_LOG(LogTemp, Warning, TEXT("AI Controler: Begin play"));
-	//ATank* MyTank = GetControlledTank();
-	//if (MyTank)
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("Possessed Tank: %s"), *MyTank->GetName());
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Error, TEXT("Unable to get possessed Tank"));
-	//}
 }
 
 void ATankAIController::Tick(float DeltaTime)

@@ -38,6 +38,14 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
+void ATank::FireProjectile()
+{
+	// auto time = GetWorld()->GetTimeSeconds();
+	// UE_LOG(LogTemp, Warning, TEXT("%f: %f - elevation"), time, Elevation);
+
+	UE_LOG(LogTemp, Warning, TEXT("BANG!!!"))
+}
+
 void ATank::AimAt(FVector HitLocation)
 {
 	TankAimingComponent->AimAt(HitLocation, ProjectileVelocity);

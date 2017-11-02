@@ -10,7 +10,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; // TODO Should this tick
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -18,7 +18,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::AimAt(FVector HitLocation, float ProjectileVelocity)
 {
 	if (!Barrel) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
-	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
+	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
 
 	FVector outTossVelocity;
 	FVector Startpoint = Barrel->GetSocketLocation(FName("ProjectileLaunchPoint"));
@@ -70,5 +70,5 @@ void UTankAimingComponent::MoveTurretTowards(FVector* AimDirection)
 	auto AimAsRotator = AimDirection->Rotation();
 	auto deltaRotator = AimAsRotator - BarrelRotator;
 
-	Turret->RotateToTarget(deltaRotator.Yaw);
+	Turret->Rotate(deltaRotator.Yaw);
 }
