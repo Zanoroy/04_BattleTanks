@@ -7,6 +7,9 @@
 #include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
+class UTankBarrel; // Forward declaration
+class UTankTurret;
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
@@ -16,14 +19,14 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = setup)
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 private:	
 	UTankAimingComponent* TankAimingComponent = nullptr;
@@ -33,5 +36,8 @@ private:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float ProjectileVelocity = 8000.0f;
+
 };

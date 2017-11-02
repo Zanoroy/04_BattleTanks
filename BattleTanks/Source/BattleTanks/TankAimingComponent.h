@@ -3,11 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
+// Forward declaration
+class UTankBarrel; 
+class UTankTurret;
 
+// Hold's properties for the Tank Barrel.
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 {
@@ -16,17 +21,15 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void AimAt(FVector HitLocation);
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	
+	void AimAt(FVector HitLocation, float ProjectileVelocity);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 private:	
-	UStaticMeshComponent* Barrel = nullptr;
+	void MoveBarrelTowards(FVector*);
+	void MoveTurretTowards(FVector*);
+	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
 };

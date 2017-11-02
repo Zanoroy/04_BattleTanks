@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "AIController.h"
 #include "Engine/World.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
 #include "TankAIController.generated.h"
 
+class ATank; // Forward Decleration
 /**
  * 
  */
