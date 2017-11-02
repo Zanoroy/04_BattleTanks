@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/World.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"
 #include "Tank.generated.h"
@@ -43,4 +45,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float ProjectileVelocity = 4000.0f;
 
+	UPROPERTY(EditAnywhere, Category = setup)
+	TSubclassOf<class AProjectile> ProjectileBlueprint;
+
+	UTankBarrel* Barrel = nullptr;
 };

@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 
 // Sets default values
 ATank::ATank()
@@ -25,12 +27,12 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
@@ -40,10 +42,21 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::FireProjectile()
 {
-	// auto time = GetWorld()->GetTimeSeconds();
-	// UE_LOG(LogTemp, Warning, TEXT("%f: %f - elevation"), time, Elevation);
+	if (!Barrel) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("BANG!!!"))
+	//Spawn a projectile at the Socket on the barrel
+	FVector Startpoint = Barrel->GetSocketLocation(FName("ProjectileLaunchPoint"));
+	FRotator Rotation = Barrel->GetForwardVector().Rotation();
+	FActorSpawnParameters SpawnInfo;
+	if (!ProjectileBlueprint) {
+		auto time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Error, TEXT("%f: - Projectile blueprint not available!"), time);
+		return;
+	}
+
+	AProjectile* MyProjectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Startpoint, Rotation, SpawnInfo);
+	MyProjectile->LaunchProjectile(ProjectileVelocity);
+
 }
 
 void ATank::AimAt(FVector HitLocation)
