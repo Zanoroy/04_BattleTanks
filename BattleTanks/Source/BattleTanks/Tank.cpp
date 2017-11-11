@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
+#include "TankTrack.h"
 
 // Sets default values
 ATank::ATank()
@@ -40,23 +41,37 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
+void ATank::SetLeftTrackReference(UTankTrack * TrackToSet)
+{
+	LeftTrack = TrackToSet;
+}
+
+void ATank::SetRightTrackReference(UTankTrack * TrackToSet)
+{
+	RightTrack = TrackToSet;
+}
+
 void ATank::FireProjectile()
 {
-	if (!Barrel) return;
+	bool isReloaded = (FPlatformTime::Seconds() - LastTimeFired) > ReloadTimeinSeconds;
 
-	//Spawn a projectile at the Socket on the barrel
-	FVector Startpoint = Barrel->GetSocketLocation(FName("ProjectileLaunchPoint"));
-	FRotator Rotation = Barrel->GetForwardVector().Rotation();
-	FActorSpawnParameters SpawnInfo;
-	if (!ProjectileBlueprint) {
-		auto time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Error, TEXT("%f: - Projectile blueprint not available!"), time);
-		return;
+	if (Barrel && isReloaded) {
+		//Spawn a projectile at the Socket on the barrel
+		FVector Startpoint = Barrel->GetSocketLocation(FName("ProjectileLaunchPoint"));
+		FRotator Rotation = Barrel->GetForwardVector().Rotation();
+		FActorSpawnParameters SpawnInfo;
+
+		if (!ProjectileBlueprint) {
+			auto time = GetWorld()->GetTimeSeconds();
+			UE_LOG(LogTemp, Error, TEXT("%f: - Projectile blueprint not available!"), time);
+			return;
+		}
+
+		AProjectile* MyProjectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Startpoint, Rotation, SpawnInfo);
+		MyProjectile->LaunchProjectile(ProjectileVelocity);
+
+		LastTimeFired = FPlatformTime::Seconds();
 	}
-
-	AProjectile* MyProjectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Startpoint, Rotation, SpawnInfo);
-	MyProjectile->LaunchProjectile(ProjectileVelocity);
-
 }
 
 void ATank::AimAt(FVector HitLocation)
