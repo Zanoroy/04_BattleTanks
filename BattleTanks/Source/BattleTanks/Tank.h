@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Tank.generated.h"
 
 class UTankBarrel; // Forward declaration
@@ -45,8 +46,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeinSeconds = 3.0f;
 
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
 	// Sets default values for this pawn's properties
 	ATank();
 
@@ -65,5 +64,11 @@ private:
 	UTankTrack* RightTrack = nullptr;
 
 	double LastTimeFired = 0;
+
+protected:
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UMovementComponent* TankMovementComponent = nullptr;
 
 };

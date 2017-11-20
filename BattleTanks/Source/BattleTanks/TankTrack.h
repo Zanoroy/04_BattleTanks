@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
@@ -14,5 +15,14 @@ class BATTLETANKS_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
-	
+public:
+	/// Set throttle between -1 and 1
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void SetThrottle(float Throttle);
+
+private:
+	// Max force per track, in Newtons
+	UPROPERTY(EditDefaultsOnly) 
+	float MaximumDrivingForce = 400000; // Assume 40 Tonne tank, and 1g accelleration
+
 };
