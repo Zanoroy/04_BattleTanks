@@ -26,6 +26,8 @@ void ATankAIController::Tick(float DeltaTime)
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate self tank!!! What do I do now. I am a tank with no purpose"));
 	}
 
+	MoveToActor(TargetTank, AcceptanceRadius);
+
 	ControlledTank->AimAt(TargetTank->GetActorLocation());
 
 	ControlledTank->FireProjectile();

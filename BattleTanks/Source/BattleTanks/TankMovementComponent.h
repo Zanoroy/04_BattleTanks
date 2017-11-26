@@ -25,6 +25,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void IntendMovementFoward(float Throw);
 
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void IntendTurnClockwise(float Throw);
+
+	//TODO Check best protection (Public/Private)	
+	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

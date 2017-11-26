@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "TankTrack.h"
 #include "TankMovementComponent.h"
+#include "TankTrack.h"
 
 // Sets default values for this component's properties
 UTankMovementComponent::UTankMovementComponent()
@@ -13,15 +13,35 @@ UTankMovementComponent::UTankMovementComponent()
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
-	if (!LeftTrackToSet || !RightTrackToSet) return;
-
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 
 }
+
 UFUNCTION(BlueprintCallable, Category = Movement)
 void UTankMovementComponent::IntendMovementFoward(float Throw)
 {
+	if (!LeftTrack|| !RightTrack) return;
+	Throw = FMath::Clamp<float>(Throw, -1, 1);
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw);
+}
+
+void UTankMovementComponent::IntendTurnClockwise(float Throw)
+{
+	if (!LeftTrack|| !RightTrack) return;
+	Throw = FMath::Clamp<float>(Throw, -1, 1);
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
+}
+
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+{
+
+	auto time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: %s Requested movement %s"), time, *GetOwner()->GetName(), *MoveVelocity.ToString());
 
 }
+
+
 

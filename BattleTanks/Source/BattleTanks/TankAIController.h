@@ -26,4 +26,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// UPROPERTY(EditAnywhere, Category = Setup)
+	float AcceptanceRadius = 3000.0f;
+
 };

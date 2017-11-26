@@ -5,6 +5,7 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
+	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
 	auto time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f: Track Throttle %f!"), time, Throttle);
 
