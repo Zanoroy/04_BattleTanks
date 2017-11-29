@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #pragma once
 
@@ -7,6 +7,15 @@
 #include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
+
+UENUM()
+enum class EFiringStatus : uint8
+{
+	Aiming,
+	Reloading,
+	Locked
+};
+
 
 // Forward declaration
 class UTankBarrel; 
@@ -21,12 +30,16 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	
-	void AimAt(FVector HitLocation, float ProjectileVelocity);
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTurretReference(UTankTurret* TurretToSet);
 
-private:	
+	void AimAt(FVector HitLocation, float ProjectileVelocity);
+
+	UFUNCTION(BlueprintCallable, Category = "Aiming")
+	void Initalise(UTankBarrel * Barrel, UTankTurret * Turret);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Firing")
+	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
+private:
 	void MoveBarrelTowards(FVector*);
 	void MoveTurretTowards(FVector*);
 	UTankBarrel* Barrel = nullptr;

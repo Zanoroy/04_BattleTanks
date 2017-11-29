@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
@@ -13,6 +13,13 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
+}
+
+void UTankAimingComponent::Initalise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+	UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float ProjectileVelocity)
@@ -42,19 +49,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float ProjectileVelocity)
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	Turret = TurretToSet;
-}
-
-
 void UTankAimingComponent::MoveBarrelTowards(FVector* AimDirection)
 {
+	if (!Barrel) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
 	// Calculate the movement required
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection->Rotation();
@@ -65,6 +62,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector* AimDirection)
 
 void UTankAimingComponent::MoveTurretTowards(FVector* AimDirection)
 {
+	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
 	// Calculate the movement required
 	auto BarrelRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection->Rotation();

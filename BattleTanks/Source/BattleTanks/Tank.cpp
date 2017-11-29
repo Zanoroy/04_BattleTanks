@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #include "Tank.h"
 #include "TankBarrel.h"
@@ -10,10 +10,16 @@
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// No need to protect the Pointer, it is part of the constructor
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	// TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+
+}
+
+void ATank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
 }
 
@@ -33,13 +39,13 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	//TankAimingComponent->SetBarrelReference(BarrelToSet);
 	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
-	TankAimingComponent->SetTurretReference(TurretToSet);
+	//TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 void ATank::SetLeftTrackReference(UTankTrack * TrackToSet)
@@ -54,7 +60,9 @@ void ATank::SetRightTrackReference(UTankTrack * TrackToSet)
 
 void ATank::FireProjectile()
 {
-	bool isReloaded = (FPlatformTime::Seconds() - LastTimeFired) > ReloadTimeinSeconds;
+	isReloaded = (FPlatformTime::Seconds() - LastTimeFired) > ReloadTimeinSeconds;
+	if (TankAimingComponent && TankAimingComponent->FiringStatus == EFiringStatus::Reloading)
+		TankAimingComponent->FiringStatus = EFiringStatus::Aiming;
 
 	if (Barrel && isReloaded) {
 		//Spawn a projectile at the Socket on the barrel
@@ -77,7 +85,9 @@ void ATank::FireProjectile()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	TankAimingComponent->AimAt(HitLocation, ProjectileVelocity);
+	if(TankAimingComponent)
+		TankAimingComponent->AimAt(HitLocation, ProjectileVelocity);
+
 }
 
 

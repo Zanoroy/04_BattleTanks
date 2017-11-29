@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #pragma once
 
@@ -37,9 +37,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void FireProjectile();
 
+	bool isReloaded = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UMovementComponent* TankMovementComponent = nullptr;
+
 
 private:	
 	
@@ -48,6 +57,9 @@ private:
 
 	// Sets default values for this pawn's properties
 	ATank();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -64,11 +76,5 @@ private:
 	UTankTrack* RightTrack = nullptr;
 
 	double LastTimeFired = 0;
-
-protected:
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UMovementComponent* TankMovementComponent = nullptr;
 
 };

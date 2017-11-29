@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #include "TankTrack.h"
 
@@ -6,8 +6,7 @@
 void UTankTrack::SetThrottle(float Throttle)
 {
 	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
-	auto time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Track Throttle %f!"), time, Throttle);
+
 
 	// TODO: clamp throttle value
 	auto ForceApplied = GetForwardVector() * Throttle * MaximumDrivingForce;

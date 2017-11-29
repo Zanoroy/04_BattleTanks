@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 /// #include "Components/ActorComponent.h"
 /// #include "GameFramework/Actor.h"
 
@@ -22,13 +22,12 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-public:
-	ATank* GetControlledTank() const;
 	
 private:
 	void AimTowardCrosshair();

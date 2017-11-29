@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Bruce Quinton (ish)
 
 #pragma once
 
@@ -28,11 +28,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void IntendTurnClockwise(float Throw);
 
-	//TODO Check best protection (Public/Private)	
-	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
-
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+
+	// Called from the path finding logic by the AI controllers
+	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 };
