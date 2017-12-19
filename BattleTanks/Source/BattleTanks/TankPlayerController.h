@@ -25,6 +25,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimingComponent);
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

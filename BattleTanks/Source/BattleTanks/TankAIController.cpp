@@ -16,12 +16,12 @@ void ATankAIController::Tick(float DeltaTime)
 	auto TargetTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (!TargetTank)
+	if (!ensure(TargetTank))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate target tank!!! What do I do now. I am a tank with no purpose"));
 	}
 
-	if (!ControlledTank)
+	if (!ensure(ControlledTank))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate self tank!!! What do I do now. I am a tank with no purpose"));
 	}

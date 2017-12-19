@@ -21,7 +21,7 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 UFUNCTION(BlueprintCallable, Category = Movement)
 void UTankMovementComponent::IntendMovementFoward(float Throw)
 {
-	if (!LeftTrack|| !RightTrack) return;
+	if (!ensure(LeftTrack && RightTrack)) return;
 	Throw = FMath::Clamp<float>(Throw, -1, 1);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -29,7 +29,7 @@ void UTankMovementComponent::IntendMovementFoward(float Throw)
 
 void UTankMovementComponent::IntendTurnClockwise(float Throw)
 {
-	if (!LeftTrack|| !RightTrack) return;
+	if (!ensure(LeftTrack && RightTrack)) return;
 	Throw = FMath::Clamp<float>(Throw, -1, 1);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);

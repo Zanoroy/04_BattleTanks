@@ -17,15 +17,19 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initalise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
+
+	if (!ensure(BarrelToSet)) { UE_LOG(LogTemp, Warning, TEXT("%s barrel was not past to the aiming component Initalise"), *GetOwner()->GetName());  return; }
+	if (!ensure(TurretToSet)) { UE_LOG(LogTemp, Warning, TEXT("%s turret was not past to the aiming component Initalise"), *GetOwner()->GetName());  return; }
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
-	UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float ProjectileVelocity)
 {
-	if (!Barrel) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
-	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
+	UE_LOG(LogTemp, Warning, TEXT("%s Calling AIM at"), *GetOwner()->GetName());
+
+	if (!ensure(Barrel)) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
+	if (!ensure(Turret)) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
 
 	FVector outTossVelocity;
 	FVector Startpoint = Barrel->GetSocketLocation(FName("ProjectileLaunchPoint"));
@@ -51,7 +55,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float ProjectileVelocity)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector* AimDirection)
 {
-	if (!Barrel) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
+	if (!ensure(Barrel)) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate barrel"), *GetOwner()->GetName());  return; }
 	// Calculate the movement required
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection->Rotation();
@@ -62,7 +66,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector* AimDirection)
 
 void UTankAimingComponent::MoveTurretTowards(FVector* AimDirection)
 {
-	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
+	if (!ensure(Turret)) { UE_LOG(LogTemp, Warning, TEXT("%s unable to locate turret"), *GetOwner()->GetName());  return; }
 	// Calculate the movement required
 	auto BarrelRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection->Rotation();

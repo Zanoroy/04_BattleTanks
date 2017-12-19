@@ -6,13 +6,11 @@
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
-#include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Tank.generated.h"
 
 class UTankBarrel; // Forward declaration
 class UTankTurret;
-class UTankTrack;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
@@ -28,12 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UFUNCTION(BlueprintCallable, Category = setup)
-	void SetLeftTrackReference(UTankTrack* TrackToSet);
-
-	UFUNCTION(BlueprintCallable, Category = setup)
-	void SetRightTrackReference(UTankTrack* TrackToSet);
-
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void FireProjectile();
 
@@ -45,10 +37,6 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UMovementComponent* TankMovementComponent = nullptr;
-
 
 private:	
 	
@@ -71,9 +59,6 @@ private:
 	TSubclassOf<class AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;
-
-	UTankTrack* LeftTrack = nullptr;
-	UTankTrack* RightTrack = nullptr;
 
 	double LastTimeFired = 0;
 
