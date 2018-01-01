@@ -1,6 +1,7 @@
 // Copyright Bruce Quinton (ish)
 
 #include "TankAIController.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 
@@ -28,9 +29,10 @@ void ATankAIController::Tick(float DeltaTime)
 
 	MoveToActor(TargetTank, AcceptanceRadius);
 
-	ControlledTank->AimAt(TargetTank->GetActorLocation());
-
-	ControlledTank->FireProjectile();
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+	AimingComponent->AimAt(TargetTank->GetActorLocation());
+	AimingComponent->FireProjectile();
 }
 
 
