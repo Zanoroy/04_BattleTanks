@@ -36,7 +36,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 void ATankPlayerController::AimTowardCrosshair()
 {
 	// Check we have access to the controlled tank.
-	if (!GetControlledTank()) { return; }
+	if (!GetPawn() || !GetControlledTank()) { return; }
 
 	FVector HitLocation;
 

@@ -20,11 +20,13 @@ void ATankAIController::Tick(float DeltaTime)
 	if (!ensure(TargetTank))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate target tank!!! What do I do now. I am a tank with no purpose"));
+		return;
 	}
 
 	if (!ensure(ControlledTank))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to locate self tank!!! What do I do now. I am a tank with no purpose"));
+		return;
 	}
 
 	MoveToActor(TargetTank, AcceptanceRadius);
@@ -32,7 +34,10 @@ void ATankAIController::Tick(float DeltaTime)
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	AimingComponent->AimAt(TargetTank->GetActorLocation());
-	AimingComponent->FireProjectile();
+
+	// Only fire when we are locked on the target!
+	if(AimingComponent->GetFiringState() == EFiringStatus::Locked)
+		AimingComponent->FireProjectile();
 }
 
 

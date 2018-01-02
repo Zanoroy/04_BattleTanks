@@ -13,7 +13,8 @@ enum class EFiringStatus : uint8
 {
 	Aiming,
 	Reloading,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 //// Forward declaration
@@ -30,14 +31,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void FireProjectile();
 
 	UFUNCTION(BlueprintCallable, Category = "Aiming")
@@ -49,18 +49,24 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float ProjectileVelocity = 4000.0f;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeinSeconds = 3.0f;
 
-	UPROPERTY(EditAnywhere, Category = setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<class AProjectile> ProjectileBlueprint;
 
+	EFiringStatus GetFiringState() const;
 
 private:
 	void MoveBarrelTowards(FVector*);
 	void MoveTurretTowards(FVector*);
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+	int RoundsLeft = 3;
+
 	//bool isReloaded = false;
 	double LastTimeFired = 0;
 	bool IsBarrelMoving();

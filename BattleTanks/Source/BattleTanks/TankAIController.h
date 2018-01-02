@@ -22,11 +22,13 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Public to child classes ONLY! (such as Blueprints)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000.0f;
+
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// UPROPERTY(EditAnywhere, Category = Setup)
-	float AcceptanceRadius = 3000.0f;
 
 };

@@ -35,6 +35,7 @@ void UTankMovementComponent::IntendTurnClockwise(float Throw)
 	RightTrack->SetThrottle(-Throw);
 }
 
+// Called by AI tanks
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
 {
 
