@@ -19,6 +19,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void LaunchProjectile(float);
+	
+	UPROPERTY(VisibleAnywhere, category = "Setup")
+	UStaticMeshComponent *CollisionMesh = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, category = "Setup")
+	UParticleSystemComponent *LaunchBlast = nullptr;
 
 protected:
 	// Called when the game starts or when spawned
