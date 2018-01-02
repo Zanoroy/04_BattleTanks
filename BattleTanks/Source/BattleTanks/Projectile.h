@@ -20,8 +20,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void LaunchProjectile(float);
 	
-	UPROPERTY(VisibleAnywhere, category = "Setup")
-	UStaticMeshComponent *CollisionMesh = nullptr;
+	UPROPERTY(VisibleAnywhere, category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, category = "Setup")
 	UParticleSystemComponent *LaunchBlast = nullptr;
