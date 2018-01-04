@@ -11,7 +11,7 @@ void ATankPlayerController::BeginPlay()
 	GetControlledTank();
 
 	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { 
+	if (!AimingComponent) { 
 		
 		auto time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Error, TEXT("%f: - Tank aiming component not found!"), time);
@@ -45,7 +45,7 @@ void ATankPlayerController::AimTowardCrosshair()
 	{
 		// Tell controller tank to aim at this point
 		auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-		if (!ensure(AimingComponent)) { 
+		if (!AimingComponent) { 
 			auto time = GetWorld()->GetTimeSeconds();
 			UE_LOG(LogTemp, Error, TEXT("%f: - Tank aiming component STILL not found!"), time);
 			return; 
@@ -95,7 +95,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitResult, 
 		StartLocation, 
 		EndLocation, 
-		ECollisionChannel::ECC_Visibility)
+		ECollisionChannel::ECC_Camera)
 		)
 	{
 		HitLocation = HitResult.Location;
@@ -104,4 +104,22 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 
 	HitLocation = FVector(0.0f);
 	return false;
+}
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!PossessedTank) { return; }
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+	}
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Error, TEXT("My tank (Player) is Dead"));
+	StartSpectatingOnly();
 }

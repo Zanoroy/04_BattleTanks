@@ -28,6 +28,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimingComponent);
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,6 +40,9 @@ private:
 	// Start the tank barrel moving toward the where the crosshair is in the world..
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
+	UFUNCTION()
+	void OnTankDeath();
 
 	UPROPERTY(EditAnywhere)
 	float TankRange = 1000000.0f;

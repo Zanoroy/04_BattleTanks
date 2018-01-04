@@ -121,7 +121,6 @@ void UTankAimingComponent::MoveTurretTowards(FVector* AimDirection)
 
 void UTankAimingComponent::FireProjectile()
 {
-	UE_LOG(LogTemp, Error, TEXT("Rounds Left %i"), this->RoundsLeft);
 	if (Barrel &&
 		RoundsLeft > 0 && 
 		(FiringStatus == EFiringStatus::Aiming || FiringStatus == EFiringStatus::Locked)) {

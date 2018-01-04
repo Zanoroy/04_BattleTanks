@@ -50,7 +50,7 @@ public:
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	int RoundsLeft = 3;
+	int RoundsLeft = 20;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float ProjectileVelocity = 4000.0f;

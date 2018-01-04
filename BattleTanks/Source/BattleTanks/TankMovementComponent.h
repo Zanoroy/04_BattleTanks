@@ -27,7 +27,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void IntendTurnClockwise(float Throw);
-
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

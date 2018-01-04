@@ -26,9 +26,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 8000.0f;
 
+	virtual void SetPawn(APawn* InPawn) override;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UFUNCTION()
+	void OnTankDeath();
 
 };
